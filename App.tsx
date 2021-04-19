@@ -1,18 +1,12 @@
 import React from 'react';
 
 import {View, Text, StyleSheet} from 'react-native'
+import { Welcome } from './src/pages/Welcome';
 
 
 export default function App() {
   return(
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        Bem-vindo a Next Level Week 
-      </Text>
-      <Text style={styles.description}>
-        NLW #5
-      </Text>
-    </View>
+    <Welcome />
   )
 }
 
