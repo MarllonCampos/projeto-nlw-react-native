@@ -26,21 +26,18 @@ export function Welcome() {
                     Gerencie {'\n'}
                     suas plantas de{'\n'}
                     forma fácil
-            </Text>
+                </Text>
 
                 <Image
                     source={wateringImg}
                     style={styles.image}
                     resizeMode='contain'
-
                 />
-
-
 
                 <Text style={styles.subtitle}>
                     Não esqueça mais de regar suas plantas.
                     Nós cuidamos de lembrar você sempre que precisar.
-            </Text>
+                </Text>
 
 
                 <TouchableOpacity
@@ -50,8 +47,6 @@ export function Welcome() {
                     <Feather name="chevron-right" style={styles.buttonIcon} />
 
                 </TouchableOpacity>
-
-
             </View>
         </SafeAreaView>
     )
@@ -61,15 +56,12 @@ export function Welcome() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        paddingTop: 32,
     },
     wrapper: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingHorizontal:20
+        paddingHorizontal: 20
     },
     title: {
         fontSize: 28,
