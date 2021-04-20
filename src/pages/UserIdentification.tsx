@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/core';
 
 
 import {
@@ -8,7 +9,9 @@ import {
     View,
     TextInput,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import { Button } from '../components/Button';
 
@@ -17,63 +20,73 @@ import fonts from '../styles/fonts';
 
 
 export function UserIdentification() {
-    const [isFocused,setIsFocused] = useState(false)
-    const [isFilled,setIsFilled] = useState(false)
-    const [name,setName] = useState<string>()
+    const navigation = useNavigation();
 
+    const [isFocused, setIsFocused] = useState(false)
+    const [isFilled, setIsFilled] = useState(false)
+    const [name, setName] = useState<string>()
 
 
 
     function handleInputBlur() {
-            setIsFocused(false)
-            setIsFilled(!!name);
+        setIsFocused(false)
+        setIsFilled(!!name);
     }
 
     function handleInputFocus() {
         setIsFocused(true)
     }
 
-    function HandleInputChange(value: string){
+    function HandleInputChange(value: string) {
         setIsFilled(!!value)
         setName(value)
     }
 
+    function HandleSubmit() {
+        navigation.navigate('Confirmation')
+    }
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
                 style={styles.container}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
-                <View style={styles.content}>
-                    <View style={styles.form}>
-                        <View style={styles.header}>
-                            <Text style={styles.emoji}>
-                                {isFilled ? '😄' : '😃'}
-                            </Text>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.content}>
+                        <View style={styles.form}>
+                            <View style={styles.header}>
+                                <Text style={styles.emoji}>
+                                    {isFilled ? '😄' : '😃'}
+                                </Text>
 
-                            <Text style={styles.title}>
-                                Como podemos {'\n'}
+                                <Text style={styles.title}>
+                                    Como podemos {'\n'}
                                 chamar você
                             </Text>
-                        </View>
+                            </View>
 
-                        <TextInput
-                            style={
-                                [styles.input,
-                                    (isFocused || isFilled ) && {borderColor: colors.green}
-                                ]
+                            <TextInput
+                                style={
+                                    [styles.input,
+                                    (isFocused || isFilled) && { borderColor: colors.green }
+                                    ]
 
-                            }
-                            placeholder="Digite um nome"
-                            onBlur={handleInputBlur}
-                            onFocus={handleInputFocus}
-                            onChangeText={HandleInputChange}
-                        />
-                        <View style={styles.footer}>
-                            <Button />
+                                }
+                                placeholder="Digite um nome"
+                                onBlur={handleInputBlur}
+                                onFocus={handleInputFocus}
+                                onChangeText={HandleInputChange}
+
+                            />
+                            <View style={styles.footer}>
+                                <Button
+                                    onPress={HandleSubmit}
+                                    title="Confirmar"
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
         </SafeAreaView>
     )
@@ -99,7 +112,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 54,
     },
     header: {
-        alignItems:'center'
+        alignItems: 'center'
     },
     title: {
         fontSize: 24,
