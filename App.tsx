@@ -1,34 +1,25 @@
 import React from 'react';
+import AppLoading from 'expo-app-loading'
 
-import {View, Text, StyleSheet} from 'react-native'
 import { Welcome } from './src/pages/Welcome';
+import {
+  useFonts,
+  Jost_400Regular,
+  Jost_600SemiBold
+} from '@expo-google-fonts/jost'
 
 
 export default function App() {
-  return(
+  const [fontsLoaded] = useFonts({
+    Jost_400Regular,
+    Jost_600SemiBold
+  })
+
+  if (!fontsLoaded) { return <AppLoading /> }
+
+
+  return (
     <Welcome />
   )
 }
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#999'
-  },
-
-  title: {
-    fontSize:22,
-    color:'#333',
-    fontWeight:'bold'
-  },
-
-  description: {
-    fontSize:12,
-    color:'#666',
-
-  }
-
-})
