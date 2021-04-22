@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import {
     SafeAreaView,
@@ -11,7 +11,8 @@ import {
     KeyboardAvoidingView,
     Platform,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    Alert
 } from 'react-native';
 import { Button } from '../components/Button';
 
@@ -42,7 +43,13 @@ export function UserIdentification() {
         setName(value)
     }
 
-    function HandleSubmit() {
+    async function HandleSubmit() {
+        if(!name)    return Alert.alert('Me diz como chamar você 😿')
+        
+        // await AsyncStorage.setItem('@plantmanager:user',name,() => {Alert.alert('Salvo no dispositivo')}) Utilizando callback (da pra chamar um component)
+        await AsyncStorage.setItem('@plantmanager:user',name)
+
+        
         navigation.navigate('Confirmation')
     }
     return (
