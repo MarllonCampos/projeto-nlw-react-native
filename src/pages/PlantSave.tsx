@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, Platform, Alert } from 'react-native'
+import React, {  useState } from 'react';
+import { StyleSheet, View, Text,  TouchableOpacity, Image, Platform, Alert } from 'react-native'
 
 import { SvgFromUri } from 'react-native-svg'
 import { getBottomSpace } from 'react-native-iphone-x-helper';
-import { useRoute } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker'
 
 import waterdrop from '../assets/waterdrop.png'
@@ -24,7 +24,7 @@ export function PlantSave() {
     const [showDatePicker, setShowDatePicker] = useState(Platform.OS == 'ios' || false)
     const route = useRoute();
     const { plant } = route.params as Params
-
+    const navigation = useNavigation()
 
     function handleChangeTime(event: Event, dateTime: Date | undefined) {
         if (Platform.OS == 'android') {
@@ -47,18 +47,28 @@ export function PlantSave() {
     }
 
     async function handleSave(){
-        const data = await loadPlant();
-        console.log(data)
-        // console.log(JSON.stringify({...plant,dateTimeNotification:selectedDateTime}))
-        // try {
-        //     await savePlant({
-        //         ...plant,
-        //         dateTimeNotification: selectedDateTime
-        //     })
+        
+        try {
+            await savePlant({
+                ...plant,
+                dateTimeNotification: selectedDateTime
+            });
 
-        // }catch {
-        //     return Alert.alert('Não foi possível salvar. 😿')
-        // }
+            navigation.navigate('Confirmation', 
+            {
+                title:'Tudo certo',
+                subtitle:'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado.',
+                buttonTitle:'Muito Obrigado :D',
+                icon:'hug',
+                nextScreen:'MyPlants'
+            })
+
+            const data = await loadPlant();
+        console.log(data)
+
+        }catch {
+            return Alert.alert('Não foi possível salvar. 😿')
+        }
     }
 
     return (
